@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.autoSave": "onFocusChange",
+		"github.copilot.chat.codeGeneration.useInstructionFiles": true
+	}
+}

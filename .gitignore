@@ -1,0 +1,49 @@
+# === ROS2 and Colcon Build Artifacts ===
+build/
+install/
+log/
+
+# === Python Artifacts ===
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+*.pyd
+*.pyo
+*.pkl
+*.pickle
+
+# === VSCode and IDE Files ===
+.vscode/
+.idea/
+*.swp
+
+# === Environment and Dependency Files ===
+.env
+.venv/
+env/
+venv/
+Pipfile.lock
+poetry.lock
+
+# === OS/Filesystem Junk ===
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# === Custom Data / Calibration ===
+*.yaml
+*.json
+*.db
+*.ini
+
+# === ROS2 Launch/Test/Bag Files ===
+*.launch.py
+*.test.py
+*.bag
+*.bag.active
+*.bag.db3
+
+# === Orca Hand Specific (if any) ===
+orca_core/models/__pycache__/
+
