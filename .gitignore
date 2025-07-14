@@ -32,13 +32,13 @@ Thumbs.db
 desktop.ini
 
 # === Custom Data / Calibration ===
-*.yaml
+
 *.json
 *.db
 *.ini
 
 # === ROS2 Launch/Test/Bag Files ===
-*.launch.py
+
 *.test.py
 *.bag
 *.bag.active
