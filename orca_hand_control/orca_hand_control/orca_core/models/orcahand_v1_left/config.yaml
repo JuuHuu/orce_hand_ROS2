@@ -1,6 +1,6 @@
 version: 0.2.1
 baudrate: 4000000
-port: /dev/ttyUSB0 # linux
+port: /dev/ttyUSB1 # linux
 # port: /dev/tty.usbserial-FT9MISJT # mac
 max_current: 400
 
@@ -110,7 +110,7 @@ neutral_position:
 #   pinky_pip: -20
 #   wrist: 0
 
-calib_current: 350
+calib_current: 400
 calib_step_size: 0.1
 calib_step_period: 0.001
 calib_num_stable: 10  # should be period * num_stable > 1

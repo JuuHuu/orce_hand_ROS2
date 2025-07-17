@@ -11,6 +11,7 @@ import math
 import threading
 import json
 from std_msgs.msg import String
+import time
 
 
 
@@ -48,7 +49,7 @@ class OrcaJointPublisher(Node):
         ]
 
         self.publisher_ = self.create_publisher(JointState, 'joint_states', 10)
-        self.timer = self.create_timer(0.05, self.publish_joint_states)  # 20Hz
+        self.timer = self.create_timer(0.1, self.publish_joint_states)  # 10Hz
         
         self.subscribtion = self.create_subscription(
             String,
@@ -57,14 +58,26 @@ class OrcaJointPublisher(Node):
             10
         )
         
+        self.subscribtion = self.create_subscription(
+            String,
+            "/orca_hand/enable_torque",
+            self.torque_command_callback,
+            10
+        )
+        
+
+                
+        
+        
         self.lock = threading.Lock()
         self.command_thread = None
         
+        self.torque_enable = 'enable'
+        
+        
         self.joint_dict = {
         "thumb_mcp": -30,
-
-
-    }
+        }
         
 
     def publish_joint_states(self):
@@ -111,6 +124,10 @@ class OrcaJointPublisher(Node):
             self.get_logger().error(f"Failed to decode JSON: {e} ,{msg.data}")
             return
         
+        
+        if self.torque_enable == 'disable':
+            self.hand.enable_torque()
+        
         def send_command():
             with self.lock:
                 # self.hand.set_joint_pos(joint_dict,num_steps=25,step_size=0.001)
@@ -120,12 +137,29 @@ class OrcaJointPublisher(Node):
         
         self.command_thread = threading.Thread(target=send_command,daemon=True)
         self.command_thread.start()
+        
+        time.sleep(0.5)
+
+        if self.torque_enable == 'disable':
+            self.get_logger().info("Disabling torque.")
+            self.hand.disable_torque()
 
     def destroy_node(self):
         self.get_logger().info("Disabling torque and disconnecting ORCA Hand.")
         self.hand.disable_torque()
         self.hand.disconnect()
         super().destroy_node()
+        
+    def torque_command_callback(self, msg:String):
+        if msg.data == "enable":
+            self.get_logger().info("Enabling torque.")
+            self.hand.enable_torque()
+            self.torque_enable = 'enable'
+        elif msg.data == "disable":
+            self.get_logger().info("Disabling torque.")
+            self.hand.disable_torque()
+            self.torque_enable = 'disable'
+        
         
 
 
