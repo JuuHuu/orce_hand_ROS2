@@ -49,7 +49,7 @@ class OrcaJointPublisher(Node):
         ]
 
         self.publisher_ = self.create_publisher(JointState, 'joint_states', 10)
-        self.timer = self.create_timer(0.1, self.publish_joint_states)  # 10Hz
+        # self.timer = self.create_timer(0.1, self.publish_joint_states)  # 10Hz
         
         self.subscribtion = self.create_subscription(
             String,
@@ -138,7 +138,7 @@ class OrcaJointPublisher(Node):
         self.command_thread = threading.Thread(target=send_command,daemon=True)
         self.command_thread.start()
         
-        time.sleep(0.5)
+        # time.sleep(0.1)
 
         if self.torque_enable == 'disable':
             self.get_logger().info("Disabling torque.")

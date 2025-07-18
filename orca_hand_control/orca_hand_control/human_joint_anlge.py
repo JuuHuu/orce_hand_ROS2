@@ -19,26 +19,42 @@ class JointStatePrinter(Node):
 
         # Joint biases in radians — customize as needed
         self.bias_map = {
-            'left_thumb_abd': math.radians(5.0),
-            'left_index_mcp': math.radians(90),
-            'left_wrist': math.radians(10.0),
-            'left_thumb_mcp':math.radians(0), 
-            'left_thumb_abd':math.radians(0), 
-            'left_thumb_pip':math.radians(0), 
-            'left_thumb_dip':math.radians(0),
+            'left_thumb_abd': math.radians(-20),
+            'left_thumb_mcp':math.radians(130), 
+            'left_thumb_pip':math.radians(180), 
+            'left_thumb_dip':math.radians(180),
             'left_index_abd':math.radians(0), 
             'left_index_mcp':math.radians(180), 
-            'left_index_pip':math.radians(180),
-            'left_middle_abd':math.radians(0), 
-            'left_middle_mcp':math.radians(0), 
-            'left_middle_pip':math.radians(0),
+            'left_index_pip':math.radians(360),
+            'left_middle_abd':math.radians(10), 
+            'left_middle_mcp':math.radians(180), 
+            'left_middle_pip':math.radians(360),
             'left_ring_abd':math.radians(0), 
-            'left_ring_mcp':math.radians(0), 
-            'left_ring_pip':math.radians(0),
+            'left_ring_mcp':math.radians(180), 
+            'left_ring_pip':math.radians(360),
             'left_pinky_abd':math.radians(0), 
-            'left_pinky_mcp':math.radians(0), 
-            'left_pinky_pip':math.radians(0),
+            'left_pinky_mcp':math.radians(180), 
+            'left_pinky_pip':math.radians(360),
             'left_wrist':math.radians(0)
+        }
+        self.scale_map = {
+            'left_thumb_abd': 1,
+            'left_thumb_mcp':-1, 
+            'left_thumb_pip':-1, 
+            'left_thumb_dip':-1,
+            'left_index_abd':1, 
+            'left_index_mcp':-1, 
+            'left_index_pip':-1,
+            'left_middle_abd':1, 
+            'left_middle_mcp':-1, 
+            'left_middle_pip':-1,
+            'left_ring_abd':1, 
+            'left_ring_mcp':-1, 
+            'left_ring_pip':-1,
+            'left_pinky_abd':1, 
+            'left_pinky_mcp':-1, 
+            'left_pinky_pip':-1,
+            'left_wrist':1
         }
 
         self.humanmsg = None
@@ -70,15 +86,31 @@ class JointStatePrinter(Node):
         joint_out = JointState()
         joint_out.header.stamp = self.get_clock().now().to_msg()
         joint_out.name = self.joint_names
+        # Special summed joints
+        combined_joints = {
+            'left_index_pip': ('left_index_pip', 'left_index_dip'),
+            'left_middle_pip': ('left_middle_pip', 'left_middle_dip'),
+            'left_ring_pip': ('left_ring_pip', 'left_ring_dip'),
+            'left_pinky_pip': ('left_pinky_pip', 'left_pinky_dip'),
+        }
 
-        joint_out.position = [
-            name_to_pos.get(name, 0.0) + self.bias_map.get(name, 0.0)
-            for name in self.joint_names
-        ]
+        joint_out.position = []
+        for name in self.joint_names:
+            if name in combined_joints:
+                base, extra = combined_joints[name]
+                base_val = name_to_pos.get(base, 0.0)
+                extra_val = name_to_pos.get(extra, 0.0)
+                value = base_val + extra_val*1.2
+            else:
+                value = name_to_pos.get(name, 0.0)
+
+            value *= self.scale_map.get(name, 1.0)
+            value += self.bias_map.get(name, 0.0)
+            joint_out.position.append(value)
 
         self.publisher.publish(joint_out)
-
-
+        
+        
 def main(args=None):
     rclpy.init(args=args)
     node = JointStatePrinter()

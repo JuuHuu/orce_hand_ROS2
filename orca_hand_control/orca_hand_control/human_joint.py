@@ -105,18 +105,23 @@ class HumanJointMarkerPublisher(Node):
                 pip = dip = 0.0
 
                 if finger == "thumb":
-                    if len(joint_pos) >= 3:
-                        pip = self.angle_between(joint_pos[0], joint_pos[1], joint_pos[2])
-                    if len(joint_pos) >= 4:
-                        dip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
+                    # if len(joint_pos) >= 3:
+                    #     pip = self.angle_between(joint_pos[0], joint_pos[1], joint_pos[2])
+                    # if len(joint_pos) >= 4:
+                    #     dip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
+                    
+                    pip = self.angle_between(joint_pos[0], joint_pos[1], joint_pos[2])
+                    dip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
                     adb = self.compute_abduction_angle(
                         joint_pos[0], joint_pos[1], palm_reference, palm_normal
                     )
                 else:
-                    if len(joint_pos) >= 4:
-                        pip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
-                    if len(joint_pos) >= 5:
-                        dip = self.angle_between(joint_pos[2], joint_pos[3], joint_pos[4])
+                    # if len(joint_pos) >= 4:
+                    #     pip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
+                    # if len(joint_pos) >= 5:
+                    #     dip = self.angle_between(joint_pos[2], joint_pos[3], joint_pos[4])
+                    pip = self.angle_between(joint_pos[1], joint_pos[2], joint_pos[3])
+                    dip = self.angle_between(joint_pos[2], joint_pos[3], joint_pos[4])
                     adb = self.compute_abduction_angle(
                         joint_pos[1], joint_pos[2], palm_reference, palm_normal
                     )
