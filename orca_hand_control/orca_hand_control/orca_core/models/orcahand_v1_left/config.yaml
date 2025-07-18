@@ -1,6 +1,6 @@
 version: 0.2.1
 baudrate: 4000000
-port: /dev/ttyUSB1 # linux
+port: /dev/ttyUSB0 # linux
 # port: /dev/tty.usbserial-FT9MISJT # mac
 max_current: 400
 

@@ -37,8 +37,9 @@ setup(
     entry_points={
         'console_scripts': [
             "test_orca_hand = orca_hand_control.test:main",
-            'publish_joint_states = orca_hand_control.joint_publisher:main',
-            'human_joint = orca_hand_control.human_joint:main',
+            'publish_robot_joint_states = orca_hand_control.joint_publisher:main',
+            'publish_human_joint_states = orca_hand_control.human_joint:main',
+            'publish_human_joint_angle = orca_hand_control.human_joint_anlge:main'
         ],
     },
 )
