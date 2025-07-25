@@ -24,23 +24,21 @@ setup(
         ('share/' + package_name + '/assets/urdf/right/visual', glob('orca_hand_control/assets/urdf/right/visual/*.*')),
         ('share/' + package_name + '/rviz', glob('orca_hand_control/rviz/config.rviz')),
         ('share/' + package_name + '/launch', glob('launch/*.*')),
-        
-        
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='juu',
     maintainer_email='hujunem95@gmail.com',
-    description='TODO: Package description',
+    description='Hand control with tactile sensor integration',
     license='TODO: License declaration',
-    # tests_require=['pytest'],
     entry_points={
         'console_scripts': [
             "test_orca_hand = orca_hand_control.test:main",
             'publish_robot_joint_states = orca_hand_control.joint_publisher:main',
             'publish_human_joint_states = orca_hand_control.human_joint:main',
             'publish_human_joint_angle = orca_hand_control.human_joint_anlge:main',
-            'control_orca = orca_hand_control.orca_hand_control:main'
+            'control_orca = orca_hand_control.orca_hand_control:main',
+            'publish_tactile = orca_hand_control.tactile:main',
         ],
     },
 )

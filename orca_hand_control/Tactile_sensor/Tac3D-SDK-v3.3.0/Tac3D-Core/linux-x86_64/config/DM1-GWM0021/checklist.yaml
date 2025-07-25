@@ -1,0 +1,11 @@
+capture_I: true
+capture_E: true
+solve_param: true
+pick_features: true
+gen_DCU_matrix: true
+cali_platform: true
+gen_KH_matrix: true
+performance_test: true
+visualization: true
+serial: true
+authorize: true

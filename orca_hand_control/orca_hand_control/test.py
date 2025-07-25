@@ -33,10 +33,10 @@ def main():
     
     hand.enable_torque()
     
-    hand.set_zero_position()
+    # hand.set_zero_position()
     # hand.set_neutral_position()
     
-    print(hand.get_joint_pos())
+    print(hand.get_joint_pos(False))
     
 
     

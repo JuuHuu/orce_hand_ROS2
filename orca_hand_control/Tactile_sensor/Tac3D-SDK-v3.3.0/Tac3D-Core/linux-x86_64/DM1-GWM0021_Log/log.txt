@@ -1,0 +1,15 @@
+time: 2025-07-25 08:39:09
+SN: DM1-GWM0021
+device: YYQ2502068
+config version: 3.3.0
+Software version: 3.3.0
+camera index set to: -1
+SDK IP set to: 
+SDK port set to: -1
+Desktop IP set to: 
+Client Mode set to: 0
+Display Mode set to: 0
+transform image set to: 0
+ThreadsNum : 9
+config 0: InputSource
+[error] Unable to find a device matching the configuration file ! (0x4e)
